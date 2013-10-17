@@ -26,3 +26,34 @@ CONSTRAINTS :
 0 < N < 200
 
 */
+fscanf(STDIN, "%d", $lg_car);
+fscanf(STDIN, "%d", $h_car);
+
+$txt = strtoupper(fgets(STDIN));
+$lg_txt = strlen($txt) - 1;
+
+for ( $i = 0 ; $i < $h_car ; $i++ )
+{
+ $Line_car[$i] = fgets(STDIN );
+
+ $Chaine = "";
+
+ for ($j = 0; $j < $lg_txt ; $j++ )
+ {
+    $car = substr($txt, $j, 1);
+    $ASCI_car = ord($car);
+  
+    if ( $ASCI_car < 65 or $ASCI_car > 90 )
+    {
+      $pos_car = 26 * $lg_car;
+    }
+    else
+    {
+     $pos_car = ( $ASCI_car - 65 ) * $lg_car;
+    }
+  
+    $Chaine .= substr($Line_car[$i], $pos_car, $lg_car);
+  }
+
+ fputs( STDOUT, $Chaine."\n" );
+}
