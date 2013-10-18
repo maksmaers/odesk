@@ -45,33 +45,19 @@ Output
 0 0 00 0000 0 00
 */
 
-$t=fgets(STDIN);
-$t=preg_replace('/[\n]/', '', $t);
-$bin='';
-
-for ($i=0; $i<strlen($t); $i++)
-{
-    $bin .= decbin(ord($t[$i]));
+$sentence = rtrim(fgets(STDIN), "\n");
+$binary = '';
+ 
+for ($x=0;$x<strlen($sentence);$x++) {
+    $binary .= sprintf("%07s", decbin(ord($sentence[$x])));
 }
-
-$bin = preg_replace('/(0{1,})/', '|z$1', $bin);
-$bin = preg_replace('/(1+)/', '|o$1', $bin);
-$s=explode('|', $bin);
-$final='';
-
-for ($i=0; $i<sizeof($s); $i++)
-{
-    if (substr($s[$i], 0, 1) == 'z')
-    {
-        $final .= ' ' . preg_replace('/z/', '00 ', $s[$i]);
-
-    }
-    else
-    {
-        $f = preg_replace('/o/', '0 ', $s[$i]);
-        $f = preg_replace('/1/', '0', $f);
-        $final .= ' ' . $f;
-    }
+preg_match_all("/0+|1+/", $binary, $all);
+ 
+for ($x=0;$x<count($all[0]);$x++) {
+    if ($x > 0)
+        echo ' ';
+    echo ($all[0][$x][0] == '0') ? '00 ' : '0 ';
+    for ($k=0;$k<strlen($all[0][$x]);++$k)
+        echo '0';
 }
-
-echo substr($final, 2);
+echo "\n";
